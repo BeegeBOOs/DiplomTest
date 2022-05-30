@@ -20,11 +20,6 @@
       "type": "uid",
       "targetField": "title"
     },
-    "features": {
-      "type": "component",
-      "repeatable": false,
-      "component": "features.features"
-    },
     "price": {
       "type": "integer"
     },
@@ -37,6 +32,21 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "tasks"
+    },
+    "rates": {
+      "type": "component",
+      "repeatable": true,
+      "component": "rates.rates"
+    },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "features.features"
+    },
+    "skills": {
+      "type": "component",
+      "repeatable": true,
+      "component": "skills.skills"
     }
   }
 }

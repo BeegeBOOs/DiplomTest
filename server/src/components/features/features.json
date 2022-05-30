@@ -7,10 +7,12 @@
   },
   "options": {},
   "attributes": {
-    "item": {
-      "type": "component",
-      "repeatable": true,
-      "component": "features-item.features-item"
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
     }
   }
 }

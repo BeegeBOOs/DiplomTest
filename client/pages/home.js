@@ -1,13 +1,13 @@
 import { Button } from '@mui/material';
+import Layout from '../components/Layout';
 import React from 'react';
-import Header from '../components/header';
 
 const Home = () => {
   return (
     <>
-      <Header />
-      <Button variant='outlined'>Button</Button>
-      
+      <Layout>
+        <Button variant='outlined'>Button</Button>
+      </Layout>
     </>
   );
 };

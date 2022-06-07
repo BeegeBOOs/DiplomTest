@@ -25,8 +25,8 @@ function Copyright(props) {
   return (
     <Typography variant='body2' color='text.secondary' align='center' {...props}>
       {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
+      <Link color='inherit' href='/'>
+        SelfEmploy
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -102,7 +102,7 @@ const Register = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component='h1' variant='h5'>
-              Sign in
+              Sign Up
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <Grid container spacing={2}>

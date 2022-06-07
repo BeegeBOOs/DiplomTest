@@ -1,48 +1,22 @@
 import { Provider } from 'react-redux';
 import { useStore } from '../store';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import { theme } from '../styles/theme';
 
-const theme = createTheme({
-  palette: {
-    type: 'dark',
-    primary: {
-      main: '#061121',
-    },
-    secondary: {
-      main: '#1199FA',
-    },
-    background: {
-      default: '#111111',
-      paper: '#151718',
-    },
-    error: {
-      main: '#E64B60',
-    },
-    warning: {
-      main: '#F86315',
-    },
-    info: {
-      main: '#A141DC',
-    },
-    success: {
-      main: '#098551',
-    },
-  },
-  props: {
-    MuiTooltip: {
-      arrow: true,
-    },
-  },
-});
+import { AnimatePresence } from 'framer-motion';
 
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
 
   return (
     <Provider store={store}>
-      {/* <ThemeProvider theme={theme}> */}
-        <Component {...pageProps} />
-      {/* </ThemeProvider> */}
+      <ThemeProvider theme={theme}>
+        {/*<AnimatePresence exitBeforeEnter>*/}
+
+          <Component {...pageProps} />
+
+        {/*</AnimatePresence>*/}
+      </ThemeProvider>
     </Provider>
   );
 }

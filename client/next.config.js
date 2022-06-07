@@ -1,6 +1,5 @@
-const withTM = require('next-transpile-modules')([
-  '@mui-treasury/layout',
-  '@mui-treasury/mockup',
-]);
+const nextConfig = {
+  swcMinify: true,
+};
 
-module.exports = withTM({});
+module.exports = nextConfig;

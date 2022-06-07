@@ -6,24 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 
-import {
-  Root,
-  Header,
-  EdgeTrigger,
-  EdgeSidebar,
-  SidebarContent,
-  Content,
-  Footer,
-  getCozyScheme,
-} from '@mui-treasury/layout';
-
-import {
-  HeaderMockup,
-  ContentMockup,
-  FooterMockup,
-  NavSidebarMockup,
-} from '@mui-treasury/mockup/layout';
-
 import Menu from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -34,9 +16,13 @@ import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
-const scheme = getCozyScheme();
+import { motion } from 'framer-motion';
+import Link from '@mui/material/Link';
+import NavigationMenu from './NavigationMenu';
+import AvatarComp from './Avatar';
+import { styled } from '@stitches/react';
 
-const Layout = () => {
+const Layout = ({ children }) => {
   //popover
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -51,65 +37,55 @@ const Layout = () => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  const Header = styled('div', {
+    position: 'fixed',
+    width: '100vw',
+    height: '5rem',
+    background: '#FEFEFE',
+    paddingRight: '1.5rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  });
+
   return (
-    <Root scheme={scheme}>
+    <>
       <CssBaseline />
-      <Header style={{  }}>
-        <div
-          style={{
-            display: 'flex',
-            height: '100%',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '0px 10px',
-          }}>
-          <EdgeTrigger style={{}} target={{ anchor: 'left', field: 'open' }}>
+      {/* 11ffee00 */}
+      <Header style={{zIndex:9999999}}>
+        {/* <EdgeTrigger style={{}} target={{ anchor: 'left', field: 'open' }}>
             {(open, setOpen) => (
               <IconButton onClick={() => setOpen(!open)} edge='end'>
                 {open ? <KeyboardArrowLeft /> : <Menu />}
               </IconButton>
             )}
-          </EdgeTrigger>
-          <h2 style={{}}>SelfEmploy</h2>
-          <div>
-            <Tooltip title='Користувач'>
-              <IconButton onClick={handleClick}>
-                <AccountCircleIcon fontSize='large' />
-              </IconButton>
-            </Tooltip>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'left',
-                  padding: '0px 10px',
-                }}>
-                <Typography variant='h5'>User name</Typography>
-                <Typography variant='h6'>User email</Typography>
-                <Divider variant='middle' />
-                <Button>
-                  <Typography variant='button'>Log out</Typography>
-                </Button>
-                <Button variant='outlined' >
-                  <Typography variant='button'>Log in</Typography>
-                </Button>
-              </div>
-            </Popover>
-          </div>
-        </div>
+          </EdgeTrigger> */}
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{
+            x: 0,
+            scale: 1,
+            opacity: 1,
+          }}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            padding: '0 10px',
+          }}>
+          <Link
+            variant='h2'
+            underline='none'
+            color='inherit'
+            href='/'
+            sx={{ fontSize: 24 }}>
+            {'SelfEmploy'}
+          </Link>
+        </motion.div>
+        <NavigationMenu/>
+        <AvatarComp />
       </Header>
-      <EdgeSidebar anchor='left'>
+      {/* <EdgeSidebar anchor='left'>
         <SidebarContent>
           <NavSidebarMockup />
         </SidebarContent>
@@ -122,8 +98,8 @@ const Layout = () => {
             </ButtonBase>
           )}
         </EdgeTrigger>
-      </EdgeSidebar>
-      <Content>
+      </EdgeSidebar> */}
+      {/* <Content>
         <Container maxWidth='md' sx={{ py: 5 }}>
           <ContentMockup />
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}></Grid>
@@ -131,8 +107,19 @@ const Layout = () => {
       </Content>
       <Footer>
         <FooterMockup />
-      </Footer>
-    </Root>
+      </Footer> */}
+      <div
+        style={{
+          paddingTop: '6rem',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          maxWidth: '1160px',
+          paddingLeft: '1.25rem',
+          paddingRight: '1.25rem',
+        }}>
+        {children}
+      </div>
+    </>
   );
 };
 

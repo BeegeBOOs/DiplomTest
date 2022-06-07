@@ -7,7 +7,6 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::task.task", ({ strapi }) => ({
-  // Method 3: Replacing a core action
   async findOne(ctx) {
     const { slug } = ctx.params;
 
@@ -17,5 +16,15 @@ module.exports = createCoreController("api::task.task", ({ strapi }) => ({
     const sanitizedEntity = await this.sanitizeOutput(entity);
 
     return this.transformResponse(sanitizedEntity);
+  },
+  async create(ctx) {
+    
+    // const entity = await strapi.db.query("api::task.task").create(ctx.request.body);
+    // const sanitizedEntity = await this.sanitizeOutput(entity);
+    console.log(JSON.stringify(ctx.state.user, null, 2));
+    const response = await super.create(ctx);
+    
+
+    return response;
   },
 }));

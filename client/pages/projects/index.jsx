@@ -1,0 +1,251 @@
+import React, { useCallback, useEffect, useMemo } from 'react';
+import Layout from '../../components/Layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetTaskFetch } from '../../actions';
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  Stack,
+  Typography,
+} from '@mui/material';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { styled } from '@stitches/react';
+
+const Page = styled('div', { display: 'flex' });
+
+const PageHeader = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  width: '100%',
+});
+const Label = styled('span', {
+  color: '#fff',
+  borderRadius: '5px',
+  fontSize: '15px',
+  padding: '0.2em 0.6em',
+  marginLeft: '10px',
+  background: '#00ae5a',
+});
+
+const Index = () => {
+  const tasks = useSelector((state) => state.tasks.tasks);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  useEffect(() => {
+    dispatch(GetTaskFetch('http://localhost:1337/api/tasks?populate=*'));
+  }, []);
+
+  console.log('tasks', tasks);
+  return (
+    <Layout>
+      <Grid container>
+        <Grid item style={{ marginBottom: '10px' }}>
+          <PageHeader>
+            <h1 style={{ margin: '0px' }}>Усі фриланс-проєкти в Україні</h1>
+            <Label>{tasks.length}</Label>
+          </PageHeader>
+        </Grid>
+        <Grid container>
+          <Grid item xs={3} style={{ paddingRight: '5px' }}>
+            <p>
+              Фрілансер - «вільний художник», який працює дистанційно, виконує як разові,
+              так і проектні завдання. Таке працевлаштування активно набирає популярності.
+            </p>
+          </Grid>
+          <Grid item container xs={9}>
+            {tasks.map(({ attributes }) => {
+              return (
+                <>
+                  <Grid item xs={12}>
+                    <Card
+                      sx={{
+                        margin: '5px 0px',
+                        maxWidth: '100%',
+                        width: '100%',
+                        borderRadius: '10px',
+                      }}>
+                      <CardActionArea
+                        onClick={() => router.push('/projects/' + attributes.slug)}>
+                        <CardContent style={{ padding: '10px 10px 6px' }}>
+                          <Typography gutterBottom variant='h5' component='div'>
+                            {attributes?.title}
+                          </Typography>
+                          <Typography variant='h6' component='div'>
+                            {attributes?.description}
+                          </Typography>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                            }}>
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                              }}>
+                              <Button
+                                size='small'
+                                variant={'contained'}
+                                style={{ borderRadius: '10px', marginRight: '10px'}}
+                                color='primary'>
+                                Додати до Корзини
+                              </Button>
+                              <Label>
+                                {'Кількість пропозицій: '+ attributes?.rates?.length}
+                              </Label>
+                            </div>
+                            <Typography
+                              variant='h6'
+                              color='text.secondary'
+                              style={{ right: '0' }}>
+                              {attributes?.price != null ? attributes?.price : ''}
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                </>
+              );
+            })}
+          </Grid>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dapibus, arcu
+            in viverra vehicula, eros lacus placerat ipsum, sit amet malesuada tortor mi
+            at urna. Fusce accumsan, sapien ut feugiat pretium, mauris neque porta nibh,
+            tristique pellentesque nibh lorem eu justo. Etiam justo lorem, facilisis at
+            viverra at, ultrices eget sem. Donec quis condimentum orci. Aliquam erat
+            volutpat. Aliquam et pulvinar dolor. Aliquam erat volutpat. Proin accumsan
+            ultricies blandit. Nullam ut turpis venenatis, scelerisque nunc ac, efficitur
+            risus. Integer sit amet metus iaculis, ullamcorper ipsum in, lacinia mauris.
+            Nam laoreet sem sit amet tortor mollis scelerisque. Pellentesque in velit
+            rhoncus, malesuada massa nec, placerat neque. Maecenas condimentum massa sed
+            facilisis ultrices. Donec iaculis nulla id metus fringilla, ut ornare justo
+            finibus. Praesent sed sagittis dolor. Aliquam dignissim, libero gravida
+            accumsan consequat, diam neque elementum velit, eget tincidunt metus purus at
+            diam. Praesent aliquet massa vitae lacinia bibendum. Sed tristique mi vitae
+            sapien iaculis, sit amet iaculis diam efficitur. Morbi viverra in urna maximus
+            luctus. Aenean eleifend ipsum lorem, nec pellentesque mi imperdiet non.
+            Integer nec lectus ac leo tempor lacinia sit amet sit amet metus. Maecenas
+            consectetur nibh ac ante dictum ultrices. Donec blandit ac lectus feugiat
+            iaculis. Curabitur sodales magna consequat libero maximus, et ultrices felis
+            sodales. Aenean laoreet sodales elit, vel molestie urna consequat quis. Sed
+            non elit et dolor eleifend eleifend eleifend non quam. Vivamus pulvinar semper
+            sapien, nec consectetur velit facilisis et. Sed in sem quis ante posuere
+            congue. Aenean in consectetur velit, sed ultricies risus. Morbi et turpis et
+            tellus malesuada hendrerit cursus eu dolor. Aliquam auctor eleifend sapien,
+            vel sodales enim condimentum in. Nullam ac rutrum lectus. Ut venenatis vitae
+            nisl nec consequat. Cras hendrerit justo nec rutrum viverra. Curabitur lectus
+            turpis, ultricies eget lectus a, volutpat feugiat elit. Nunc quis laoreet
+            eros, eget consequat elit. Class aptent taciti sociosqu ad litora torquent per
+            conubia nostra, per inceptos himenaeos. Vivamus pellentesque, massa vitae
+            blandit interdum, magna urna pulvinar ex, vel venenatis tortor mi ut risus.
+            Orci varius natoque penatibus et magnis dis parturient montes, nascetur
+            ridiculus mus. Donec tincidunt est eu libero eleifend pharetra. Sed molestie
+            cursus ultrices. Sed at mi dolor. Proin eu vestibulum ligula, vestibulum
+            consectetur quam. Quisque semper vitae nisl eget fermentum. Curabitur nec
+            lacus et lectus fringilla consectetur id sed nunc. Morbi feugiat lorem a
+            fringilla pretium. Nunc porttitor felis in tempus rhoncus. Phasellus sit amet
+            ex in diam commodo maximus at suscipit orci. Nunc commodo ut erat nec
+            faucibus. Orci varius natoque penatibus et magnis dis parturient montes,
+            nascetur ridiculus mus. In hac habitasse platea dictumst. Sed mollis rhoncus
+            nibh, ut fringilla dui sollicitudin quis. Morbi tortor neque, rutrum vitae
+            laoreet ut, convallis luctus justo. Vivamus accumsan laoreet odio, vel blandit
+            arcu efficitur quis. Curabitur blandit ipsum et felis ultrices, eu auctor sem
+            luctus. Quisque consectetur massa id dui imperdiet, eu euismod nisi accumsan.
+            Vivamus ut ante non quam sollicitudin egestas. Proin dolor sem, eleifend in
+            erat vel, placerat consectetur justo. Donec gravida augue sit amet magna
+            cursus molestie. Curabitur aliquet justo blandit, gravida ligula vel, cursus
+            tellus. Aenean placerat, ipsum at elementum faucibus, sem tellus sagittis ex,
+            sed tincidunt ipsum purus eu orci. Vestibulum diam eros, varius vitae
+            fermentum vel, egestas consequat sem. Donec porttitor urna ex, sed porttitor
+            purus sagittis non. Pellentesque tempor libero vel massa eleifend suscipit.
+            Nunc magna risus, interdum eget tellus sed, malesuada sodales dolor. Phasellus
+            sapien mi, egestas ut turpis sed, bibendum pulvinar urna. Proin bibendum augue
+            eget risus placerat, eget fermentum ante blandit. Nulla eu posuere augue.
+            Donec eget metus non diam cursus tincidunt eu mattis mauris. Mauris fermentum
+            felis eros, a congue ante luctus sed. Sed nisl urna, laoreet ac iaculis nec,
+            vehicula eget justo. Cras porttitor iaculis mi, viverra molestie quam
+            fringilla et. Suspendisse eu tristique justo. Sed eget commodo enim, at tempus
+            tortor. Duis finibus nulla odio, pellentesque dictum quam luctus ac. Ut
+            imperdiet rhoncus congue. Etiam rhoncus quis leo vitae ornare. Sed turpis
+            elit, elementum a orci eget, facilisis sodales purus. Aenean dapibus arcu
+            consequat ante feugiat, nec porta erat molestie. Proin pharetra bibendum odio,
+            eu lobortis ante eleifend quis. Integer vel nisl purus. Aliquam commodo erat
+            vel tristique tristique. Duis auctor lacinia ante. Nunc feugiat iaculis risus,
+            vel blandit lectus ullamcorper id. Vestibulum laoreet lacus turpis, eget
+            posuere mauris placerat eget. Morbi non ipsum dignissim nisl vulputate
+            lobortis. Quisque posuere, felis finibus rutrum blandit, dui est hendrerit
+            ligula, vitae ornare purus nulla ut nisi. Quisque leo magna, vehicula et metus
+            sed, interdum tempor justo. Nam feugiat ultricies ullamcorper. Nunc
+            condimentum felis lorem. Praesent interdum ipsum sed elit feugiat, id
+            hendrerit mauris tincidunt. Nullam tristique quam dapibus rhoncus rhoncus. In
+            vehicula hendrerit augue, ac consequat nisl maximus eget. Donec tempus
+            placerat tortor, vel egestas tortor aliquam et. Praesent non tincidunt orci.
+            Donec lobortis lectus quis augue gravida, vel pharetra augue tincidunt.
+            Pellentesque efficitur pulvinar vulputate. Vivamus nec porta purus. Donec
+            pulvinar lacus est. Nam sed metus fringilla, semper tellus sed, dictum orci.
+            Nulla id bibendum nisi, nec mattis massa. Morbi non nulla sit amet elit
+            dignissim ullamcorper. Quisque cursus, nibh sed tristique varius, lorem leo
+            condimentum ex, eu tempor mauris augue sit amet nibh. Fusce malesuada, odio id
+            maximus efficitur, ex tortor rutrum diam, eget facilisis urna metus quis arcu.
+            Etiam sem neque, scelerisque eu egestas eget, gravida non risus. Maecenas
+            tempus tincidunt dolor in ultrices. Suspendisse vel sapien quis nunc facilisis
+            semper. Quisque elementum tortor leo, eget imperdiet nunc facilisis a. Morbi
+            id porttitor nibh. Vestibulum vitae turpis libero. Mauris vel lectus ornare,
+            hendrerit dui ut, tempus tellus. Suspendisse potenti. Quisque mi eros, posuere
+            in neque in, posuere viverra augue. Donec nisi magna, bibendum ut augue
+            ornare, egestas sollicitudin libero. Donec volutpat lobortis urna, ac euismod
+            magna blandit ut. Etiam commodo aliquam mattis. Vestibulum laoreet dolor eu
+            aliquam aliquet. Integer urna enim, imperdiet quis vestibulum nec, consectetur
+            in velit. Mauris vel ante at lorem interdum ornare nec a nulla. Nullam
+            ultrices tellus lobortis diam fermentum blandit. Quisque nec arcu mauris.
+            Etiam ut orci accumsan, sollicitudin leo ac, lobortis tellus. Mauris
+            pellentesque purus eu commodo pretium. Aliquam erat volutpat. Aliquam
+            facilisis maximus dui ac condimentum. Nunc libero justo, facilisis sed finibus
+            sit amet, rutrum a magna. Sed mattis risus justo, ac mattis quam laoreet vel.
+            Mauris dui lectus, fermentum ac rutrum vel, sodales quis lectus. Morbi egestas
+            dui ut nisl mattis commodo. Curabitur condimentum semper orci, dignissim
+            ultricies nulla tincidunt et. Donec id semper urna, eu feugiat lacus. Morbi
+            dui risus, posuere vel lobortis ut, egestas et arcu. Donec vitae libero dolor.
+            Curabitur id metus fringilla, iaculis ex a, rhoncus sapien. Phasellus
+            ultrices, risus quis malesuada lacinia, nibh dolor ornare orci, at eleifend
+            diam purus non diam. Nullam pellentesque at leo ut lacinia. Sed blandit
+            tincidunt turpis, sit amet consequat metus venenatis eget. Orci varius natoque
+            penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas
+            non arcu tincidunt, rutrum arcu a, euismod nunc. Quisque quis mattis turpis,
+            quis faucibus quam. Vestibulum tempor porta elit, nec tincidunt diam lobortis
+            nec. Nullam eget rutrum urna, ut varius nulla. Nulla a euismod eros. Quisque
+            est nisl, laoreet in congue vel, pretium eu eros. Ut aliquet tincidunt urna ut
+            auctor. Quisque eget faucibus nibh, auctor viverra lorem. Vivamus quis mollis
+            eros. Sed suscipit dui id fermentum condimentum. In pellentesque lacus at
+            sapien tincidunt faucibus. Donec a interdum dui. Nulla sed elit felis. In
+            blandit consequat mauris, nec tincidunt risus. Donec fringilla, urna eget
+            posuere gravida, libero felis semper nunc, pretium imperdiet nunc libero in
+            massa. Phasellus malesuada ex ipsum, ut lacinia velit cursus ac. Morbi cursus
+            gravida purus, vel suscipit massa venenatis ut. Nam a auctor ligula. Mauris
+            non finibus risus, ut rutrum felis. Mauris dapibus aliquet lacus, vel faucibus
+            purus. Morbi bibendum velit rutrum, aliquam purus et, suscipit erat. Aenean
+            eget ultrices mauris. Sed eget arcu neque. Sed auctor tristique pulvinar.
+            Integer commodo bibendum est. Nunc at tempor lectus, et sollicitudin ipsum.
+            Curabitur tincidunt libero eu lacus mollis, a consequat elit maximus. Donec
+            eget facilisis libero. Sed porttitor at lorem non fermentum. Ut consequat
+            metus sit amet blandit tristique. Integer luctus lacinia nisi, non faucibus
+            metus mollis sit amet. Phasellus maximus justo nec elit luctus, in
+            pellentesque nunc varius. Donec mattis rutrum diam nec fermentum.
+          </p>
+        </Grid>
+      </Grid>
+    </Layout>
+  );
+};
+
+export default Index;
